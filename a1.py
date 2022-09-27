@@ -22,7 +22,6 @@ for col in df.columns:
     df[col_vals[index]] = df[col_vals[index]].fillna(round(sum/count, 1))
     index += 1
 
-
 # label key fields
 ans_map = ["Setosa", "Versicolor", "Virginica"]
 df = df.replace("Setosa", 1)
@@ -38,55 +37,38 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(x_train, y_train)
 
+# Helper functions
+response_map = ["Enter value for Sepal length: ",
+                "Enter value for Sepal width: ",
+                "Enter value for Petal length: ",
+                "Enter value for Petal width: "]
 
-# REPL
-print("Welcome to the iris.csv K-NN model! Please follow the instructions to \ninput data to predict upon... Enter '!DONE' to exit.")
-print(df.head())
-print("Accuracy: {}".format(neigh.score(x_test, y_test)))
-sl = sw = pl = pw = 0.0
-while(True):
+
+def record_value(index: int) -> str:
+    prompt = response_map[index]
+    ans = ""
     while(True):
-        i = input("Enter value for Sepal length: ")
+        i = input(prompt)
         if(str(i) == "!DONE"):
             exit()
         elif re.match(r'^-?\d+(?:\.\d+)$', i) is None:
             print("ERROR! Incompatible value...")
         else:
-            sl = i
+            ans = i
             break
+    return ans
 
-    while(True):
-        i = input("Enter value for Sepal width: ")
-        if(i == "!DONE"):
-            exit()
-        elif re.match(r'^-?\d+(?:\.\d+)$', i) is None:
-            print("ERROR! Incompatible value...")
-        else:
-            sw = i
-            break
 
-    while(True):
-        i = input("Enter value for Petal length: ")
-        if(i == "!DONE"):
-            exit()
-        elif re.match(r'^-?\d+(?:\.\d+)$', i) is None:
-            print("ERROR! Incompatible value...")
-        else:
-            pl = i
-            break
-
-    while(True):
-        i = input("Enter value for Petal width: ")
-        if(i == "!DONE"):
-            exit()
-        elif re.match(r'^-?\d+(?:\.\d+)$', i) is None:
-            print("ERROR! Incompatible value...")
-        else:
-            pw = i
-            break
-
+# REPL
+print("\n\nWelcome to the iris.csv K-NN model! Please follow the instructions to input data to predict upon... Enter '!DONE' to exit.")
+print(df.head())
+print("Accuracy: {}".format(neigh.score(x_test, y_test)))
+sl = sw = pl = pw = 0.0
+while(True):
+    sl = record_value(0)
+    sw = record_value(1)
+    pl = record_value(2)
+    pw = record_value(3)
     ans = neigh.predict([[float(sl), float(sw), float(pl), float(pw)]])
-#ans = neigh.predict([[5.1, 3.5, 1.4, 0.2]])
-# print(ans[0])
     print("The model predicts that the data you entered is of variety {}".format(
         ans_map[ans[0]-1]))
