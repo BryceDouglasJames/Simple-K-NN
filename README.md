@@ -22,8 +22,7 @@ python3 a1.py
 From here a REPL command prompt will display in the terminal. From here you can input custom field values for each dimension.
 
 ```
-Welcome to the iris.csv K-NN model! Please follow the instructions to
-input data to predict upon... Enter '!DONE' to exit.
+Welcome to the iris.csv K-NN model! Please follow the instructions to input data to predict upon... Enter '!DONE' to exit.
    sepal.length  sepal.width  petal.length  petal.width  variety
 0           5.1          3.5           1.4          0.2        1
 1           4.9          3.0           1.4          0.2        1
